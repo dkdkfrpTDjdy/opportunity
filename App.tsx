@@ -139,7 +139,7 @@ const App: React.FC = () => {
               {/* Whobuilds */}
               <div>
                 <div className="flex justify-between mb-2">
-                   <label className="text-sm font-semibold text-gray-700">Whobuilds 폴더</label>
+                   <label className="text-sm font-semibold text-gray-700">후빌즈</label>
                    <span className="text-[10px] text-gray-400 font-bold uppercase">Optional</span>
                 </div>
                 <div className="relative group">
@@ -175,7 +175,7 @@ const App: React.FC = () => {
               {/* Existing Master */}
               <div>
                 <div className="flex justify-between mb-2">
-                   <label className="text-sm font-semibold text-gray-700">기존 통합 마스터</label>
+                   <label className="text-sm font-semibold text-gray-700">기존 통합 파일</label>
                    <span className="text-[10px] text-gray-400 font-bold uppercase">Optional</span>
                 </div>
                 <div className="relative group">
