@@ -1,0 +1,5 @@
+{
+  "name": "Construction Data Pipeline Pro",
+  "description": "A robust data pipeline tool for merging, cleaning, and processing construction project data from Whobuilds and G2B Narajang, with automated filtering, deduplication, and chunked exporting.",
+  "requestFramePermissions": []
+}
