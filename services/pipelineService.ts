@@ -38,24 +38,27 @@ export class PipelineService {
     return null;
   }
 
+  // Improved to handle spaces in keywords like "건 축 면 적"
   extractArea(text: string, type: "건축면적" | "대지면적"): string | null {
-    const pattern = new RegExp(`${type}.*?(\\d{1,3}(?:,\\d{3})*(?:\\.\\d+)?)㎡`, 'i');
+    const spacedKeyword = type.split('').join('\\s*');
+    const pattern = new RegExp(`${spacedKeyword}.*?(\\d{1,3}(?:,\\d{3})*(?:\\.\\d+)?)㎡`, 'i');
     const match = text.match(pattern);
     return match ? match[1].replace(/,/g, '') : null;
   }
 
+  // Improved to handle spaces in keywords like "지 상", "지 하"
   extractFloors(text: string, type: "지상" | "지하"): number | null {
-    const pattern = new RegExp(`${type}\\s*(\\d+)(?:층)?`, 'i');
+    const spacedKeyword = type.split('').join('\\s*');
+    const pattern = new RegExp(`${spacedKeyword}\\s*(\\d+)(?:층)?`, 'i');
     const match = text.match(pattern);
     return match ? parseInt(match[1]) : null;
   }
 
   extractHouseholds(text: string): string | null {
     const patterns = [
-      /세대수\s*[:：]?\s*(\d{1,3}(?:,\d{3})*(?:\.\d+)?)/i,
       /세\s*대\s*수\s*[:：]?\s*(\d{1,3}(?:,\d{3})*(?:\.\d+)?)/i,
-      /(\d{1,3}(?:,\d{3})*(?:\.\d+)?)\s*세대(?!수)/i,
-      /(\d{1,3}(?:,\d{3})*(?:\.\d+)?)\s*세\s*대(?!\s*수)/i
+      /(\d{1,3}(?:,\d{3})*(?:\.\d+)?)\s*세\s*대(?!수)/i,
+      /가\s*구\s*수\s*[:：]?\s*(\d{1,3}(?:,\d{3})*(?:\.\d+)?)/i
     ];
     for (const p of patterns) {
       const match = text.match(p);
@@ -64,11 +67,13 @@ export class PipelineService {
     return null;
   }
 
+  // Robust extraction for amounts handling spaces between characters (e.g., "공 사 비", "금 액")
   extractAmount(text: string): string | null {
     const patterns = [
-      /금액\s*[:：]?\s*(\d{1,3}(?:,\d{3})*(?:\.\d+)?)/i,
-      /공사비\s*[:：]?\s*(\d{1,3}(?:,\d{3})*(?:\.\d+)?)/i,
-      /공사금액\s*[:：]?\s*(\d{1,3}(?:,\d{3})*(?:\.\d+)?)/i
+      /공\s*사\s*금\s*액\s*[:：]?\s*(\d{1,3}(?:,\d{3})*(?:\.\d+)?)/i,
+      /공\s*사\s*비\s*[:：]?\s*(\d{1,3}(?:,\d{3})*(?:\.\d+)?)/i,
+      /계\s*약\s*금\s*액\s*[:：]?\s*(\d{1,3}(?:,\d{3})*(?:\.\d+)?)/i,
+      /금\s*액\s*[:：]?\s*(\d{1,3}(?:,\d{3})*(?:\.\d+)?)/i
     ];
     for (const p of patterns) {
       const match = text.match(p);
